@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>음식 추천기</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .food-card { border: 1px solid #ddd; padding: 10px; margin: 10px 0; display: flex; }
+        .food-img { width: 150px; margin-right: 15px; }
+        .food-img img { width: 100%; border-radius: 5px; }
+        .food-info { max-width: 600px; }
+    </style>
+</head>
+<body>
+    <h1>음식 추천 웹사이트</h1>
+    <form method="post">
+        <label>음식 종류:
+            <select name="category">
+                <option value="전체">전체</option>
+                <option value="한식">한식</option>
+                <option value="양식">양식</option>
+                <option value="중식">중식</option>
+            </select>
+        </label>
+        <label>재료 입력 (선택): <input type="text" name="ingredient" placeholder="예: 돼지고기" /></label>
+        <button type="submit">추천받기</button>
+    </form>
+
+    <hr />
+
+    {% if foods %}
+        <h2>추천 음식 목록</h2>
+        {% for food in foods %}
+            <div class="food-card">
+                <div class="food-img">
+                    <img src="{{ food.image }}" alt="{{ food.name }}" />
+                </div>
+                <div class="food-info">
+                    <h3>{{ food.name }}</h3>
+                    <p><strong>종류:</strong> {{ food.category }}</p>
+                    <p><strong>재료:</strong> {{ food.ingredients | join(", ") }}</p>
+                    <p>{{ food.description }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>추천 음식이 없습니다. 조건을 바꿔보세요!</p>
+    {% endif %}
+</body>
+</html>
